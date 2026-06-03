@@ -4,6 +4,7 @@
   const storage = window.SupportSiteStorage;
 
   const state = {
+    connectionError: "",
     isRemote: false,
     isSubmitting: false,
     selectedId: null,
@@ -120,6 +121,12 @@
       return;
     }
 
+    if (api.hasRemoteConnection && state.connectionError) {
+      els.connectionStatus.className = "connection-status local-only";
+      els.connectionStatus.textContent = "Supabase הוגדר, אבל טבלת ההודעות עדיין לא זמינה. יש להריץ את קובץ ה-SQL שב-docs.";
+      return;
+    }
+
     els.connectionStatus.className = "connection-status local-only";
     els.connectionStatus.textContent = "מצב פיתוח: חסרה הגדרת Supabase, לכן שמירה זמנית תישאר רק בדפדפן הזה.";
   }
@@ -128,10 +135,12 @@
     try {
       const result = await api.listMessages();
       state.isRemote = result.mode === "remote";
+      state.connectionError = "";
       state.messages = state.isRemote ? result.messages : storage.readMessages(seedMessages);
     } catch (error) {
       console.error("Could not load shared messages", error);
       state.isRemote = false;
+      state.connectionError = error.message || "remote connection failed";
       state.messages = storage.readMessages(seedMessages);
     }
 
