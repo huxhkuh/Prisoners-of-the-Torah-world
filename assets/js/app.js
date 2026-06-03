@@ -78,7 +78,7 @@
       const bankInfo = document.createElement("div");
       bankInfo.className = "bank-info";
       bankInfo.append(
-        createTextNodeElement("div", "label", "פרטי חשבון לתרומה"),
+        createTextNodeElement("div", "label", "פרטי חשבון להשתתפות"),
         createTextNodeElement("div", "value", detainee.bank.name),
         createTextNodeElement("div", "account-line", `סניף: ${detainee.bank.branch}`),
         createTextNodeElement("div", "account-line", `חשבון: ${detainee.bank.account}`),
@@ -89,7 +89,7 @@
 
       const donationTotal = getDonationTotalForDetainee(detainee.id);
       if (donationTotal > 0) {
-        card.append(createTextNodeElement("div", "donation-badge", `${formatCurrency(donationTotal)} נתרמו`));
+        card.append(createTextNodeElement("div", "donation-badge", `${formatCurrency(donationTotal)} נשלחו כחיבוק קטן`));
       }
 
       els.detaineeGrid.append(card);
@@ -233,7 +233,7 @@
       item.append(header, createTextNodeElement("div", "msg-text", message.text));
 
       if (message.donation > 0) {
-        item.append(createTextNodeElement("div", "msg-donation", `תרומה: ${formatCurrency(message.donation)}`));
+        item.append(createTextNodeElement("div", "msg-donation", `חיבוק קטן: ${formatCurrency(message.donation)}`));
       }
 
       els.messagesList.append(item);
@@ -248,7 +248,7 @@
 
     const text = state.messages
       .map((message) => {
-        const donation = message.donation > 0 ? `\nתרומה: ${formatCurrency(message.donation)}` : "";
+        const donation = message.donation > 0 ? `\nחיבוק קטן: ${formatCurrency(message.donation)}` : "";
         return `--- ${message.detaineeName} | מ: ${message.sender} | ${formatDate(message.createdAt)} ---\n${message.text}${donation}`;
       })
       .join("\n\n");
