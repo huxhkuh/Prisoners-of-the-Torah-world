@@ -1,0 +1,4 @@
+window.SupportSiteConfig = {
+  supabaseUrl: "",
+  supabaseAnonKey: "",
+};

@@ -279,7 +279,8 @@ textarea {
 }
 
 .selected-indicator,
-.success-msg {
+.success-msg,
+.connection-status {
   margin: 0 0 14px;
   border-radius: var(--border-radius-md);
   padding: 10px 12px;
@@ -295,6 +296,25 @@ textarea {
 .success-msg {
   background: var(--color-accent-soft);
   color: var(--color-accent-dark);
+}
+
+.connection-status {
+  border: 1px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.connection-status.connected {
+  border-color: rgba(29, 158, 117, 0.25);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+}
+
+.connection-status.local-only {
+  border-color: #ead49d;
+  background: #fff7df;
+  color: #7b5b10;
 }
 
 .submit-btn,
@@ -315,6 +335,11 @@ textarea {
 
 .submit-btn:hover {
   opacity: 0.9;
+}
+
+.submit-btn:disabled {
+  cursor: wait;
+  opacity: 0.6;
 }
 
 .secondary-btn {

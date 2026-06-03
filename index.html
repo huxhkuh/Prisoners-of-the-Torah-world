@@ -43,6 +43,7 @@
         <div class="detainee-grid" id="detaineeGrid"></div>
 
         <form class="form-panel" id="supportForm">
+          <p id="connectionStatus" class="connection-status" role="status"></p>
           <p id="selectedIndicator" class="selected-indicator" hidden></p>
           <p id="successMsg" class="success-msg" role="status" hidden>ההודעה נשמרה ותופיע באתר.</p>
 
@@ -70,7 +71,7 @@
         <div class="list-header">
           <div class="section-heading">
             <h2>כל ההודעות שנשמרו</h2>
-            <p>ההודעות נשמרות בדפדפן ונטענות מחדש בכל כניסה לאתר.</p>
+            <p>ההודעות נטענות ממאגר האתר המשותף, כדי שכולם יראו את אותו תוכן.</p>
           </div>
           <button class="secondary-btn" type="button" id="copyAllBtn">העתק הכל</button>
         </div>
@@ -80,7 +81,10 @@
     </main>
 
     <script src="assets/js/data.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/config.js"></script>
     <script src="assets/js/storage.js"></script>
+    <script src="assets/js/api.js"></script>
     <script src="assets/js/app.js"></script>
   </body>
 </html>

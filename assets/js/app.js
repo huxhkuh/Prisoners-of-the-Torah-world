@@ -1,16 +1,20 @@
 (function () {
   const { detainees, seedMessages } = window.SupportSiteData;
+  const api = window.SupportSiteApi;
   const storage = window.SupportSiteStorage;
 
   const state = {
+    isRemote: false,
+    isSubmitting: false,
     selectedId: null,
-    messages: storage.readMessages(seedMessages),
+    messages: [],
   };
 
   const els = {
     detaineeGrid: document.getElementById("detaineeGrid"),
     selectedIndicator: document.getElementById("selectedIndicator"),
     supportForm: document.getElementById("supportForm"),
+    connectionStatus: document.getElementById("connectionStatus"),
     senderName: document.getElementById("senderName"),
     donationAmount: document.getElementById("donationAmount"),
     messageText: document.getElementById("messageText"),
@@ -109,8 +113,35 @@
     return Math.round(number);
   }
 
-  function submitMessage(event) {
+  function setConnectionStatus() {
+    if (state.isRemote) {
+      els.connectionStatus.className = "connection-status connected";
+      els.connectionStatus.textContent = "מחובר למאגר האתר: הודעות חדשות נשמרות לכולם.";
+      return;
+    }
+
+    els.connectionStatus.className = "connection-status local-only";
+    els.connectionStatus.textContent = "מצב פיתוח: חסרה הגדרת Supabase, לכן שמירה זמנית תישאר רק בדפדפן הזה.";
+  }
+
+  async function loadMessages() {
+    try {
+      const result = await api.listMessages();
+      state.isRemote = result.mode === "remote";
+      state.messages = state.isRemote ? result.messages : storage.readMessages(seedMessages);
+    } catch (error) {
+      console.error("Could not load shared messages", error);
+      state.isRemote = false;
+      state.messages = storage.readMessages(seedMessages);
+    }
+
+    setConnectionStatus();
+    renderAll();
+  }
+
+  async function submitMessage(event) {
     event.preventDefault();
+    if (state.isSubmitting) return;
 
     if (!state.selectedId) {
       window.alert("נא לבחור עצור תחילה");
@@ -134,16 +165,34 @@
       createdAt: new Date().toISOString(),
     };
 
-    state.messages.push(message);
-    storage.writeMessages(state.messages);
-    els.supportForm.reset();
-    els.successMsg.hidden = false;
-    window.setTimeout(() => {
-      els.successMsg.hidden = true;
-    }, 3200);
+    try {
+      state.isSubmitting = true;
+      els.supportForm.querySelector(".submit-btn").disabled = true;
+      const result = await api.createMessage(message);
+      state.isRemote = result.mode === "remote";
+      state.messages.push(result.message);
 
-    renderAll();
-    showTab("messages");
+      if (!state.isRemote) {
+        storage.writeMessages(state.messages);
+      }
+
+      els.supportForm.reset();
+      els.successMsg.textContent = state.isRemote ? "ההודעה נשמרה באתר ותופיע אצל כולם." : "ההודעה נשמרה זמנית בדפדפן הזה.";
+      els.successMsg.hidden = false;
+      window.setTimeout(() => {
+        els.successMsg.hidden = true;
+      }, 3200);
+
+      setConnectionStatus();
+      renderAll();
+      showTab("messages");
+    } catch (error) {
+      console.error("Could not save support message", error);
+      window.alert("לא הצלחנו לשמור את ההודעה באתר. כדאי לבדוק את הגדרת Supabase והטבלה.");
+    } finally {
+      state.isSubmitting = false;
+      els.supportForm.querySelector(".submit-btn").disabled = false;
+    }
   }
 
   function updateStats() {
@@ -221,5 +270,5 @@
     button.addEventListener("click", () => showTab(button.dataset.tabButton));
   });
 
-  renderAll();
+  loadMessages();
 })();
