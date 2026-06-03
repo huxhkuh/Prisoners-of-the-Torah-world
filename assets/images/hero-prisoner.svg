@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="900" viewBox="0 0 1920 900" role="img" aria-label="תמונת חיזוק לעצורי תורה">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#060606"/>
+      <stop offset=".45" stop-color="#151313"/>
+      <stop offset="1" stop-color="#000000"/>
+    </linearGradient>
+    <filter id="rough">
+      <feTurbulence baseFrequency=".035" numOctaves="3" seed="18"/>
+      <feDisplacementMap in="SourceGraphic" scale="5"/>
+    </filter>
+  </defs>
+  <rect width="1920" height="900" fill="url(#bg)"/>
+  <rect width="1920" height="900" fill="#000" opacity=".22"/>
+  <g opacity=".9">
+    <rect x="180" y="-40" width="28" height="980" rx="12" fill="#222"/>
+    <rect x="184" y="-40" width="8" height="980" fill="#777" opacity=".26"/>
+    <rect x="365" y="-40" width="32" height="980" rx="12" fill="#1a1a1a"/>
+    <rect x="371" y="-40" width="8" height="980" fill="#898989" opacity=".22"/>
+    <rect x="545" y="-40" width="28" height="980" rx="12" fill="#202020"/>
+    <rect x="550" y="-40" width="7" height="980" fill="#888" opacity=".24"/>
+  </g>
+  <g opacity=".52">
+    <ellipse cx="410" cy="424" rx="236" ry="286" fill="#111"/>
+    <circle cx="382" cy="292" r="88" fill="#080808"/>
+    <path d="M260 640c42-90 138-134 238-92 53 22 90 68 108 130l-26 120H238z" fill="#181818"/>
+    <path d="M304 504c18 48 58 78 106 78s91-32 112-83" fill="none" stroke="#4a423b" stroke-width="18" stroke-linecap="round"/>
+    <path d="M302 492c40 30 78 38 126 36 44-1 84-15 119-45" fill="none" stroke="#2b2521" stroke-width="24" stroke-linecap="round"/>
+  </g>
+  <g filter="url(#rough)" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900">
+    <text x="1270" y="320" fill="#f5f1ea" font-size="150">הוציאוה</text>
+    <text x="1270" y="510" fill="#9d0d18" font-size="168">ממסגר</text>
+    <text x="1270" y="700" fill="#f5f1ea" font-size="150">נפשי!</text>
+  </g>
+</svg>

@@ -1,20 +1,22 @@
 :root {
-  --font-sans: Arial, "Noto Sans Hebrew", sans-serif;
-  --color-text-primary: #17231f;
-  --color-text-secondary: #5f6f69;
-  --color-text-muted: #7b8984;
-  --color-background-primary: #ffffff;
-  --color-background-secondary: #f4f7f5;
-  --color-background-tertiary: #edf2ef;
-  --color-border-primary: #8ba79a;
-  --color-border-secondary: #cfdad5;
-  --color-border-tertiary: #e3e9e6;
-  --color-accent: #1d9e75;
-  --color-accent-dark: #0f6e56;
-  --color-accent-soft: #e1f5ee;
-  --color-blue-soft: #e6f1fb;
-  --color-blue-text: #185fa5;
-  --shadow-soft: 0 16px 40px rgba(22, 44, 34, 0.08);
+  --font-sans: "Noto Sans Hebrew", Arial, sans-serif;
+  --font-serif: "Noto Serif Hebrew", "Noto Sans Hebrew", serif;
+  --color-text-primary: #171412;
+  --color-text-secondary: #625a52;
+  --color-text-muted: #82786e;
+  --color-background-primary: #fffdf8;
+  --color-background-secondary: #f3eee4;
+  --color-background-tertiary: #e8dfcf;
+  --color-border-primary: #9f8d75;
+  --color-border-secondary: #d7c9b5;
+  --color-border-tertiary: #e7dccb;
+  --color-accent: #a70f1a;
+  --color-accent-dark: #730810;
+  --color-accent-soft: #f8e7e3;
+  --color-gold: #b08a3b;
+  --color-blue-soft: #ebe5d8;
+  --color-blue-text: #58462b;
+  --shadow-soft: 0 18px 46px rgba(33, 24, 15, 0.11);
   --border-radius-md: 6px;
   --border-radius-lg: 8px;
 }
@@ -26,7 +28,9 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: linear-gradient(180deg, #f8faf8 0%, #eef4f1 100%);
+  background:
+    radial-gradient(circle at 82% 18%, rgba(167, 15, 26, 0.08), transparent 32%),
+    linear-gradient(180deg, #171412 0, #2a231c 360px, #f4efe7 361px, #eee5d7 100%);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
 }
@@ -42,36 +46,105 @@ button {
 }
 
 .page {
-  width: min(100% - 28px, 980px);
+  width: min(100% - 28px, 1040px);
   margin: 0 auto;
-  padding: 28px 0 48px;
+  padding: 22px 0 52px;
 }
 
-.header {
-  padding: 10px 0 24px;
-  border-bottom: 1px solid var(--color-border-tertiary);
-  text-align: center;
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-height: clamp(420px, 54vw, 640px);
+  padding: 28px max(20px, calc((100vw - 1040px) / 2)) 38px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08) 0, rgba(0, 0, 0, 0.15) 58%, rgba(23, 20, 18, 0.96) 100%),
+    url("../images/hero-prisoner.png") left center / cover no-repeat,
+    url("../images/hero-prisoner.svg") left center / cover no-repeat,
+    #090807;
+  color: #fffdf8;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 92px, rgba(255, 255, 255, 0.055) 93px 96px, transparent 97px 188px),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.66));
+  pointer-events: none;
+}
+
+.hero-copy {
+  width: min(100%, 470px);
+  margin-inline: auto 0;
+  padding: 20px 0 18px;
+  text-shadow: 0 3px 22px rgba(0, 0, 0, 0.9);
 }
 
 .eyebrow {
   margin: 0 0 8px;
-  color: var(--color-accent-dark);
+  color: #dfc17a;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0;
 }
 
-.header h1 {
-  margin: 0 0 8px;
-  color: var(--color-text-primary);
-  font-size: clamp(28px, 5vw, 42px);
-  font-weight: 700;
+.hero h1 {
+  margin: 0 0 12px;
+  color: #ffffff;
+  font-family: var(--font-serif);
+  font-size: clamp(34px, 5vw, 58px);
+  font-weight: 800;
   line-height: 1.15;
 }
 
-.header p:last-child {
+.hero p:not(.eyebrow) {
+  width: min(100%, 520px);
+  margin: 0 0 22px;
+  color: #eee4d4;
+  font-size: clamp(17px, 2.2vw, 22px);
+  font-weight: 500;
+  line-height: 1.55;
+}
+
+.hero-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 22px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: var(--border-radius-md);
+  background: var(--color-accent);
+  color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(115, 8, 16, 0.35);
+}
+
+.page-intro {
+  margin: -10px 0 22px;
+  padding: 22px 0 20px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+}
+
+.page-intro h2 {
+  margin: 0 0 6px;
+  font-family: var(--font-serif);
+  font-size: clamp(25px, 4vw, 38px);
+  line-height: 1.2;
+}
+
+.page-intro p {
+  max-width: 720px;
   margin: 0;
   color: var(--color-text-secondary);
   font-size: 15px;
+  line-height: 1.7;
 }
 
 .stats-bar {
@@ -97,9 +170,9 @@ button {
 }
 
 .stat-num {
-  color: var(--color-text-primary);
+  color: var(--color-accent-dark);
   font-size: 25px;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.2;
 }
 
@@ -128,8 +201,8 @@ button {
 
 .tab.active {
   border-bottom-color: var(--color-accent);
-  color: var(--color-text-primary);
-  font-weight: 700;
+  color: var(--color-accent-dark);
+  font-weight: 800;
 }
 
 .section-heading {
@@ -139,6 +212,7 @@ button {
 .section-heading h2 {
   margin: 0;
   color: var(--color-text-primary);
+  font-family: var(--font-serif);
   font-size: 18px;
 }
 
@@ -178,7 +252,7 @@ button {
 
 .detainee-card.selected {
   border-color: var(--color-accent);
-  box-shadow: 0 0 0 2px rgba(29, 158, 117, 0.12), var(--shadow-soft);
+  box-shadow: 0 0 0 2px rgba(167, 15, 26, 0.13), var(--shadow-soft);
 }
 
 .detainee-name {
@@ -208,9 +282,9 @@ button {
 }
 
 .bank-info .value {
-  color: var(--color-text-primary);
+  color: var(--color-accent-dark);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .bank-info .account-line {
@@ -228,7 +302,7 @@ button {
   background: var(--color-accent-soft);
   color: var(--color-accent-dark);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .form-panel {
@@ -270,7 +344,7 @@ textarea {
 input:focus,
 textarea:focus {
   border-color: var(--color-accent);
-  outline: 2px solid rgba(29, 158, 117, 0.16);
+  outline: 2px solid rgba(167, 15, 26, 0.15);
 }
 
 textarea {
@@ -306,7 +380,7 @@ textarea {
 }
 
 .connection-status.connected {
-  border-color: rgba(29, 158, 117, 0.25);
+  border-color: rgba(167, 15, 26, 0.2);
   background: var(--color-accent-soft);
   color: var(--color-accent-dark);
 }
@@ -334,7 +408,7 @@ textarea {
 }
 
 .submit-btn:hover {
-  opacity: 0.9;
+  background: var(--color-accent-dark);
 }
 
 .submit-btn:disabled {
@@ -431,6 +505,20 @@ textarea {
 }
 
 @media (max-width: 640px) {
+  .hero {
+    min-height: 520px;
+    align-items: end;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7) 48%, rgba(0, 0, 0, 0.98) 100%),
+      url("../images/hero-prisoner.png") 24% center / cover no-repeat,
+      url("../images/hero-prisoner.svg") 24% center / cover no-repeat,
+      #090807;
+  }
+
+  .hero-copy {
+    margin-inline-start: 0;
+  }
+
   .page {
     width: min(100% - 20px, 980px);
     padding-top: 18px;
