@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>חיזוק ותמיכה לעצורים</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="header">
+        <p class="eyebrow">מערכת חיזוק קהילתית</p>
+        <h1>חיזוק ותמיכה לעצורים</h1>
+        <p>כתבו מסר אישי, עדכנו תרומה, וראו את החיזוקים שנשמרו באתר.</p>
+      </header>
+
+      <section class="stats-bar" aria-label="סיכום פעילות">
+        <article class="stat-box">
+          <span class="stat-num" id="statDetainees">0</span>
+          <span class="stat-label">עצורים</span>
+        </article>
+        <article class="stat-box">
+          <span class="stat-num" id="statMessages">0</span>
+          <span class="stat-label">הודעות חיזוק</span>
+        </article>
+        <article class="stat-box">
+          <span class="stat-num" id="statDonations">₪0</span>
+          <span class="stat-label">סה"כ תרומות</span>
+        </article>
+      </section>
+
+      <nav class="tabs" aria-label="תצוגות">
+        <button class="tab active" type="button" data-tab-button="support">שלח חיזוק</button>
+        <button class="tab" type="button" data-tab-button="messages">הודעות שנשמרו</button>
+      </nav>
+
+      <section id="tab-support" class="tab-panel">
+        <div class="section-heading">
+          <h2>בחר עצור לחיזוק</h2>
+          <p>בחירה בכרטיס תמלא את יעד ההודעה ותציג את פרטי התרומה.</p>
+        </div>
+
+        <div class="detainee-grid" id="detaineeGrid"></div>
+
+        <form class="form-panel" id="supportForm">
+          <p id="selectedIndicator" class="selected-indicator" hidden></p>
+          <p id="successMsg" class="success-msg" role="status" hidden>ההודעה נשמרה ותופיע באתר.</p>
+
+          <div class="form-grid">
+            <label class="form-row">
+              <span class="form-label">שמך</span>
+              <input type="text" id="senderName" name="senderName" placeholder="ישראל ישראלי" autocomplete="name" />
+            </label>
+            <label class="form-row">
+              <span class="form-label">סכום תרומה בש"ח, אופציונלי</span>
+              <input type="number" id="donationAmount" name="donationAmount" placeholder="0" min="0" step="1" inputmode="numeric" />
+            </label>
+          </div>
+
+          <label class="form-row">
+            <span class="form-label">מסר חיזוק אישי</span>
+            <textarea id="messageText" name="messageText" placeholder="כתוב כאן מילות חיזוק, עידוד, פסוק או ברכה..." required></textarea>
+          </label>
+
+          <button class="submit-btn" type="submit">שלח חיזוק</button>
+        </form>
+      </section>
+
+      <section id="tab-messages" class="tab-panel" hidden>
+        <div class="list-header">
+          <div class="section-heading">
+            <h2>כל ההודעות שנשמרו</h2>
+            <p>ההודעות נשמרות בדפדפן ונטענות מחדש בכל כניסה לאתר.</p>
+          </div>
+          <button class="secondary-btn" type="button" id="copyAllBtn">העתק הכל</button>
+        </div>
+
+        <div class="messages-list" id="messagesList"></div>
+      </section>
+    </main>
+
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>

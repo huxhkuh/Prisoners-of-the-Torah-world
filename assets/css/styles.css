@@ -1,0 +1,436 @@
+:root {
+  --font-sans: Arial, "Noto Sans Hebrew", sans-serif;
+  --color-text-primary: #17231f;
+  --color-text-secondary: #5f6f69;
+  --color-text-muted: #7b8984;
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f4f7f5;
+  --color-background-tertiary: #edf2ef;
+  --color-border-primary: #8ba79a;
+  --color-border-secondary: #cfdad5;
+  --color-border-tertiary: #e3e9e6;
+  --color-accent: #1d9e75;
+  --color-accent-dark: #0f6e56;
+  --color-accent-soft: #e1f5ee;
+  --color-blue-soft: #e6f1fb;
+  --color-blue-text: #185fa5;
+  --shadow-soft: 0 16px 40px rgba(22, 44, 34, 0.08);
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8faf8 0%, #eef4f1 100%);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.page {
+  width: min(100% - 28px, 980px);
+  margin: 0 auto;
+  padding: 28px 0 48px;
+}
+
+.header {
+  padding: 10px 0 24px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--color-accent-dark);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.header h1 {
+  margin: 0 0 8px;
+  color: var(--color-text-primary);
+  font-size: clamp(28px, 5vw, 42px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.header p:last-child {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 15px;
+}
+
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.stat-box {
+  min-height: 82px;
+  padding: 14px 12px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  background: var(--color-background-primary);
+  box-shadow: var(--shadow-soft);
+  text-align: center;
+}
+
+.stat-num,
+.stat-label {
+  display: block;
+}
+
+.stat-num {
+  color: var(--color-text-primary);
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stat-label {
+  margin-top: 4px;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--color-border-tertiary);
+}
+
+.tab {
+  margin-bottom: -1px;
+  padding: 10px 16px;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.tab.active {
+  border-bottom-color: var(--color-accent);
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.section-heading {
+  margin-bottom: 14px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 18px;
+}
+
+.section-heading p {
+  margin: 5px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.detainee-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.detainee-card {
+  display: grid;
+  gap: 10px;
+  min-height: 184px;
+  padding: 16px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  background: var(--color-background-primary);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  text-align: right;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.detainee-card:hover,
+.detainee-card:focus-visible {
+  border-color: var(--color-border-primary);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.detainee-card.selected {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px rgba(29, 158, 117, 0.12), var(--shadow-soft);
+}
+
+.detainee-name {
+  margin: 0 0 4px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.detainee-meta,
+.detainee-note {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.bank-info {
+  padding: 10px 12px;
+  border-radius: var(--border-radius-md);
+  background: var(--color-background-secondary);
+  font-size: 12px;
+}
+
+.bank-info .label {
+  margin-bottom: 3px;
+  color: var(--color-text-secondary);
+}
+
+.bank-info .value {
+  color: var(--color-text-primary);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.bank-info .account-line {
+  margin-top: 3px;
+  color: var(--color-text-secondary);
+}
+
+.donation-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 25px;
+  padding: 4px 9px;
+  border-radius: var(--border-radius-md);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.form-panel {
+  padding: 18px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  background: var(--color-background-primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.form-row {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  background: #fff;
+  color: var(--color-text-primary);
+  padding: 11px 12px;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--color-accent);
+  outline: 2px solid rgba(29, 158, 117, 0.16);
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.selected-indicator,
+.success-msg {
+  margin: 0 0 14px;
+  border-radius: var(--border-radius-md);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.selected-indicator {
+  background: var(--color-background-secondary);
+  color: var(--color-accent-dark);
+}
+
+.success-msg {
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+}
+
+.submit-btn,
+.secondary-btn {
+  min-height: 42px;
+  border-radius: var(--border-radius-md);
+  font-weight: 700;
+  transition: opacity 0.15s, background-color 0.15s;
+}
+
+.submit-btn {
+  width: 100%;
+  border: 0;
+  background: var(--color-accent);
+  color: #fff;
+  font-size: 15px;
+}
+
+.submit-btn:hover {
+  opacity: 0.9;
+}
+
+.secondary-btn {
+  padding: 9px 13px;
+  border: 1px solid var(--color-border-secondary);
+  background: var(--color-background-primary);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.secondary-btn:hover {
+  background: var(--color-background-tertiary);
+}
+
+.list-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.message-item {
+  padding: 16px;
+  border: 1px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  background: var(--color-background-primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.msg-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+
+.msg-sender {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.msg-target {
+  border-radius: var(--border-radius-md);
+  background: var(--color-blue-soft);
+  color: var(--color-blue-text);
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.msg-date {
+  color: var(--color-text-muted);
+  font-size: 11px;
+}
+
+.msg-text {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.msg-donation {
+  margin-top: 8px;
+  color: var(--color-accent-dark);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.empty-state {
+  padding: 34px 16px;
+  border: 1px dashed var(--color-border-secondary);
+  border-radius: var(--border-radius-lg);
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .page {
+    width: min(100% - 20px, 980px);
+    padding-top: 18px;
+  }
+
+  .stats-bar,
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tabs {
+    gap: 4px;
+  }
+
+  .tab {
+    flex: 1;
+    padding-inline: 8px;
+  }
+
+  .list-header {
+    display: block;
+  }
+
+  .secondary-btn {
+    width: 100%;
+    margin-top: 8px;
+  }
+}

@@ -1,0 +1,76 @@
+window.SupportSiteData = {
+  detainees: [
+    {
+      id: "moshe-cohen",
+      name: "משה כהן",
+      age: 22,
+      yeshiva: "ישיבת מיר",
+      city: "ירושלים",
+      note: "זקוק למכתבי עידוד קצרים וברורים ולסיוע למשפחה.",
+      bank: {
+        name: "הבנק הבינלאומי",
+        branch: "123",
+        account: "12-345-678901",
+      },
+    },
+    {
+      id: "avraham-levi",
+      name: "אברהם לוי",
+      age: 21,
+      yeshiva: "ישיבת פוניבז'",
+      city: "בני ברק",
+      note: "כל הודעת חיזוק נאספת ומועברת למשפחה לצורך משלוח מסודר.",
+      bank: {
+        name: "בנק הפועלים",
+        branch: "456",
+        account: "23-456-789012",
+      },
+    },
+    {
+      id: "yitzhak-goldberg",
+      name: "יצחק גולדברג",
+      age: 23,
+      yeshiva: "ישיבת קלם",
+      city: "מודיעין עילית",
+      note: "אפשר לצרף פסוק, ברכה אישית או עדכון על תרומה.",
+      bank: {
+        name: "בנק לאומי",
+        branch: "789",
+        account: "34-567-890123",
+      },
+    },
+    {
+      id: "david-friedman",
+      name: "דוד פרידמן",
+      age: 20,
+      yeshiva: "ישיבת חברון",
+      city: "בית שמש",
+      note: "המשפחה מבקשת מסרים מחזקים בלשון נקייה ומכבדת.",
+      bank: {
+        name: "בנק מזרחי טפחות",
+        branch: "114",
+        account: "44-778-990011",
+      },
+    },
+  ],
+  seedMessages: [
+    {
+      id: "seed-1",
+      detaineeId: "moshe-cohen",
+      detaineeName: "משה כהן",
+      sender: "חברי הכולל",
+      text: "מחזקים את ידיך. הציבור עומד מאחוריך ומתפלל לשחרורך במהרה.",
+      donation: 180,
+      createdAt: "2026-06-03T08:15:00.000Z",
+    },
+    {
+      id: "seed-2",
+      detaineeId: "avraham-levi",
+      detaineeName: "אברהם לוי",
+      sender: "משפחה מירושלים",
+      text: "שתזכה לכוחות גדולים, ליישוב הדעת ולשמחה פנימית גם בימים קשים.",
+      donation: 0,
+      createdAt: "2026-06-03T09:40:00.000Z",
+    },
+  ],
+};
