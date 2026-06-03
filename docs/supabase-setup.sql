@@ -15,15 +15,19 @@ update public.support_messages
 set donation = 0
 where donation < 0;
 
+update public.support_messages
+set donation = 5
+where donation > 5;
+
 do $$
 begin
   if not exists (
     select 1
     from pg_constraint
-    where conname = 'support_messages_donation_nonnegative'
+    where conname = 'support_messages_donation_between_zero_and_five'
   ) then
     alter table public.support_messages
-    add constraint support_messages_donation_nonnegative check (donation >= 0);
+    add constraint support_messages_donation_between_zero_and_five check (donation >= 0 and donation <= 5);
   end if;
 end $$;
 

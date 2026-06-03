@@ -20,7 +20,7 @@
       detaineeName: row.detainee_name,
       sender: row.sender || "אנונימי",
       text: row.body,
-      donation: Math.max(0, Number(row.donation || 0)),
+      donation: Math.min(5, Math.max(0, Number(row.donation || 0))),
       createdAt: row.created_at,
     };
   }

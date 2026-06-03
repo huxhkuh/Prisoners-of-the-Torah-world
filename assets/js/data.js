@@ -22,6 +22,17 @@ window.SupportSiteData = {
         holder: "יעקב אסבן",
       },
     },
+    {
+      id: "chaim-via",
+      name: "חיים ויא",
+      note: "כתבו כמה מילים של חיזוק וחיבוק קטן מכל אחד.",
+      bank: {
+        name: "בנק הפועלים (12)",
+        branch: "538",
+        account: "522488",
+        holder: "חיים ויא",
+      },
+    },
   ],
   seedMessages: [],
 };

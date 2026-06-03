@@ -2,6 +2,7 @@
   const { detainees, seedMessages } = window.SupportSiteData;
   const api = window.SupportSiteApi;
   const storage = window.SupportSiteStorage;
+  const MAX_SMALL_HUG = 5;
 
   const state = {
     connectionError: "",
@@ -49,6 +50,58 @@
     return element;
   }
 
+  function getAccountLines(detainee) {
+    return [
+      `שם: ${detainee.name}`,
+      `בנק: ${detainee.bank.name}`,
+      `סניף: ${detainee.bank.branch}`,
+      `חשבון: ${detainee.bank.account}`,
+      `על שם: ${detainee.bank.holder}`,
+    ];
+  }
+
+  function copyWithFallback(text) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.inset = "-9999px auto auto -9999px";
+    document.body.append(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    return copied;
+  }
+
+  async function copyText(text, button) {
+    try {
+      try {
+        if (!navigator.clipboard) throw new Error("Clipboard API unavailable");
+        await navigator.clipboard.writeText(text);
+      } catch {
+        if (!copyWithFallback(text)) throw new Error("Fallback copy failed");
+      }
+
+      const originalText = button.textContent;
+      button.textContent = "הועתק";
+      window.setTimeout(() => {
+        button.textContent = originalText;
+      }, 1400);
+    } catch (error) {
+      console.error("Could not copy account details", error);
+      window.alert("לא הצלחנו להעתיק כרגע. אפשר לסמן ולהעתיק ידנית.");
+    }
+  }
+
+  function createCopyButton(label, text) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "copy-account-btn";
+    button.textContent = label;
+    button.addEventListener("click", () => copyText(text, button));
+    return button;
+  }
+
   function getDonationTotalForDetainee(detaineeId) {
     return state.messages
       .filter((message) => message.detaineeId === detaineeId && message.donation > 0)
@@ -61,16 +114,6 @@
     detainees.forEach((detainee) => {
       const card = document.createElement("article");
       card.className = `detainee-card${state.selectedId === detainee.id ? " selected" : ""}`;
-      card.tabIndex = 0;
-      card.setAttribute("role", "button");
-      card.setAttribute("aria-pressed", state.selectedId === detainee.id ? "true" : "false");
-      card.addEventListener("click", () => selectDetainee(detainee.id));
-      card.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          selectDetainee(detainee.id);
-        }
-      });
 
       const intro = document.createElement("div");
       intro.append(createTextNodeElement("h3", "detainee-name", detainee.name), createTextNodeElement("p", "detainee-note", detainee.note));
@@ -85,7 +128,28 @@
         createTextNodeElement("div", "account-line", `על שם: ${detainee.bank.holder}`)
       );
 
-      card.append(intro, bankInfo);
+      const actions = document.createElement("div");
+      actions.className = "detainee-actions";
+
+      const selectButton = document.createElement("button");
+      selectButton.type = "button";
+      selectButton.className = "select-detainee-btn";
+      selectButton.textContent = state.selectedId === detainee.id ? "נבחר" : "בחר לחיזוק";
+      selectButton.setAttribute("aria-pressed", state.selectedId === detainee.id ? "true" : "false");
+      selectButton.addEventListener("click", () => selectDetainee(detainee.id));
+
+      const copyActions = document.createElement("div");
+      copyActions.className = "copy-account-actions";
+      copyActions.append(
+        createCopyButton("העתק בנק", detainee.bank.name),
+        createCopyButton("העתק סניף", detainee.bank.branch),
+        createCopyButton("העתק חשבון", detainee.bank.account),
+        createCopyButton("העתק על שם", detainee.bank.holder),
+        createCopyButton("העתק הכל", getAccountLines(detainee).join("\n"))
+      );
+
+      actions.append(selectButton, copyActions);
+      card.append(intro, bankInfo, actions);
 
       const donationTotal = getDonationTotalForDetainee(detainee.id);
       if (donationTotal > 0) {
@@ -109,7 +173,7 @@
   function normalizeDonation(value) {
     const number = Number(value);
     if (!Number.isFinite(number) || number < 0) return 0;
-    return Math.round(number);
+    return Math.min(MAX_SMALL_HUG, Math.round(number));
   }
 
   function setConnectionStatus() {
@@ -159,6 +223,11 @@
     const text = els.messageText.value.trim();
     if (!text) {
       window.alert("נא לכתוב מסר חיזוק");
+      return;
+    }
+
+    if (Number(els.donationAmount.value) > MAX_SMALL_HUG) {
+      window.alert("החיבוק הקטן מוגבל עד 5 ש״ח.");
       return;
     }
 
