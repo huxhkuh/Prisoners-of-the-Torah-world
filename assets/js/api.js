@@ -20,7 +20,7 @@
       detaineeName: row.detainee_name,
       sender: row.sender || "אנונימי",
       text: row.body,
-      donation: Number(row.donation || 0),
+      donation: Math.max(0, Number(row.donation || 0)),
       createdAt: row.created_at,
     };
   }
@@ -43,6 +43,7 @@
     const { data, error } = await client
       .from(TABLE_NAME)
       .select("id,detainee_id,detainee_name,sender,body,donation,created_at")
+      .neq("detainee_id", "permission-check")
       .order("created_at", { ascending: true });
 
     if (error) throw error;

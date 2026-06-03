@@ -8,6 +8,25 @@ create table if not exists public.support_messages (
   created_at timestamptz not null default now()
 );
 
+delete from public.support_messages
+where detainee_id = 'permission-check';
+
+update public.support_messages
+set donation = 0
+where donation < 0;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_constraint
+    where conname = 'support_messages_donation_nonnegative'
+  ) then
+    alter table public.support_messages
+    add constraint support_messages_donation_nonnegative check (donation >= 0);
+  end if;
+end $$;
+
 alter table public.support_messages enable row level security;
 
 drop policy if exists "Anyone can read support messages" on public.support_messages;
