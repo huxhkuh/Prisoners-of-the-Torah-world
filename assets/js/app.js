@@ -73,18 +73,16 @@
       });
 
       const intro = document.createElement("div");
-      intro.append(
-        createTextNodeElement("h3", "detainee-name", detainee.name),
-        createTextNodeElement("p", "detainee-meta", `גיל ${detainee.age} · ${detainee.yeshiva} · ${detainee.city}`),
-        createTextNodeElement("p", "detainee-note", detainee.note)
-      );
+      intro.append(createTextNodeElement("h3", "detainee-name", detainee.name), createTextNodeElement("p", "detainee-note", detainee.note));
 
       const bankInfo = document.createElement("div");
       bankInfo.className = "bank-info";
       bankInfo.append(
         createTextNodeElement("div", "label", "פרטי חשבון לתרומה"),
         createTextNodeElement("div", "value", detainee.bank.name),
-        createTextNodeElement("div", "account-line", `חשבון: ${detainee.bank.account} | סניף: ${detainee.bank.branch}`)
+        createTextNodeElement("div", "account-line", `סניף: ${detainee.bank.branch}`),
+        createTextNodeElement("div", "account-line", `חשבון: ${detainee.bank.account}`),
+        createTextNodeElement("div", "account-line", `על שם: ${detainee.bank.holder}`)
       );
 
       card.append(intro, bankInfo);
@@ -116,19 +114,20 @@
 
   function setConnectionStatus() {
     if (state.isRemote) {
-      els.connectionStatus.className = "connection-status connected";
-      els.connectionStatus.textContent = "מחובר למאגר האתר: הודעות חדשות נשמרות לכולם.";
+      els.connectionStatus.hidden = true;
       return;
     }
 
+    els.connectionStatus.hidden = false;
+
     if (api.hasRemoteConnection && state.connectionError) {
       els.connectionStatus.className = "connection-status local-only";
-      els.connectionStatus.textContent = "Supabase הוגדר, אבל טבלת ההודעות עדיין לא זמינה. יש להריץ את קובץ ה-SQL שב-docs.";
+      els.connectionStatus.textContent = "יש כרגע תקלה בשליחת הודעות. נסו שוב בעוד כמה דקות.";
       return;
     }
 
     els.connectionStatus.className = "connection-status local-only";
-    els.connectionStatus.textContent = "מצב פיתוח: חסרה הגדרת Supabase, לכן שמירה זמנית תישאר רק בדפדפן הזה.";
+    els.connectionStatus.textContent = "יש כרגע תקלה בשליחת הודעות. נסו שוב בעוד כמה דקות.";
   }
 
   async function loadMessages() {
@@ -186,7 +185,7 @@
       }
 
       els.supportForm.reset();
-      els.successMsg.textContent = state.isRemote ? "ההודעה נשמרה באתר ותופיע אצל כולם." : "ההודעה נשמרה זמנית בדפדפן הזה.";
+      els.successMsg.textContent = "ההודעה נשלחה ותופיע באתר.";
       els.successMsg.hidden = false;
       window.setTimeout(() => {
         els.successMsg.hidden = true;
@@ -197,7 +196,7 @@
       showTab("messages");
     } catch (error) {
       console.error("Could not save support message", error);
-      window.alert("לא הצלחנו לשמור את ההודעה באתר. כדאי לבדוק את הגדרת Supabase והטבלה.");
+      window.alert("לא הצלחנו לשלוח את ההודעה כרגע. נסו שוב בעוד כמה דקות.");
     } finally {
       state.isSubmitting = false;
       els.supportForm.querySelector(".submit-btn").disabled = false;
@@ -215,7 +214,7 @@
     els.messagesList.replaceChildren();
 
     if (!state.messages.length) {
-      els.messagesList.append(createTextNodeElement("div", "empty-state", "עדיין לא נשמרו הודעות חיזוק"));
+      els.messagesList.append(createTextNodeElement("div", "empty-state", "עדיין לא נכתבו הודעות חיזוק"));
       return;
     }
 

@@ -12,7 +12,6 @@
   <body>
     <header class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">מערכת חיזוק קהילתית</p>
         <h1>כותבים חיזוק שמגיע למשפחה</h1>
         <p>מסר קצר, תרומה קטנה, ועמידה ציבורית אחת ברורה לצד העצורים.</p>
         <a class="hero-action" href="#supportForm">כתיבת חיזוק</a>
@@ -22,7 +21,7 @@
     <main class="page">
       <header class="page-intro">
         <h2>חיזוק ותמיכה לעצורים</h2>
-        <p>בחרו עצור, כתבו מסר אישי, וההודעה תישמר במאגר האתר המשותף לאחר חיבור Supabase.</p>
+        <p>בחרו עצור, כתבו מסר אישי, והצטרפו למעגל החיזוק והתמיכה.</p>
       </header>
 
       <section class="stats-bar" aria-label="סיכום פעילות">
@@ -42,7 +41,7 @@
 
       <nav class="tabs" aria-label="תצוגות">
         <button class="tab active" type="button" data-tab-button="support">שלח חיזוק</button>
-        <button class="tab" type="button" data-tab-button="messages">הודעות שנשמרו</button>
+        <button class="tab" type="button" data-tab-button="messages">הודעות חיזוק</button>
       </nav>
 
       <section id="tab-support" class="tab-panel">
@@ -54,9 +53,9 @@
         <div class="detainee-grid" id="detaineeGrid"></div>
 
         <form class="form-panel" id="supportForm">
-          <p id="connectionStatus" class="connection-status" role="status"></p>
+          <p id="connectionStatus" class="connection-status" role="status" hidden></p>
           <p id="selectedIndicator" class="selected-indicator" hidden></p>
-          <p id="successMsg" class="success-msg" role="status" hidden>ההודעה נשמרה ותופיע באתר.</p>
+          <p id="successMsg" class="success-msg" role="status" hidden>ההודעה נשלחה ותופיע באתר.</p>
 
           <div class="form-grid">
             <label class="form-row">
@@ -81,8 +80,8 @@
       <section id="tab-messages" class="tab-panel" hidden>
         <div class="list-header">
           <div class="section-heading">
-            <h2>כל ההודעות שנשמרו</h2>
-            <p>ההודעות נטענות ממאגר האתר המשותף, כדי שכולם יראו את אותו תוכן.</p>
+            <h2>כל הודעות החיזוק</h2>
+            <p>מילים טובות שנכתבו לעצורים ולמשפחותיהם.</p>
           </div>
           <button class="secondary-btn" type="button" id="copyAllBtn">העתק הכל</button>
         </div>
