@@ -2,7 +2,9 @@
   const { detainees, seedMessages } = window.SupportSiteData;
   const api = window.SupportSiteApi;
   const storage = window.SupportSiteStorage;
+  const config = window.SupportSiteConfig || {};
   const MAX_SMALL_HUG = 5;
+  const SHOW_PUBLIC_MESSAGES = config.showPublicMessages === true;
 
   const state = {
     connectionError: "",
@@ -30,6 +32,24 @@
     messagesPanel: document.getElementById("tab-messages"),
     tabButtons: document.querySelectorAll("[data-tab-button]"),
   };
+
+  function applyFeatureFlags() {
+    const messagesButton = document.querySelector('[data-tab-button="messages"]');
+
+    if (SHOW_PUBLIC_MESSAGES) {
+      if (messagesButton) messagesButton.hidden = false;
+      els.messagesPanel.hidden = els.supportPanel.hidden === false;
+      return;
+    }
+
+    if (messagesButton) messagesButton.hidden = true;
+    els.messagesPanel.hidden = true;
+    els.supportPanel.hidden = false;
+
+    els.tabButtons.forEach((button) => {
+      button.classList.toggle("active", button.dataset.tabButton === "support");
+    });
+  }
 
   function formatCurrency(value) {
     return `₪${Number(value || 0).toLocaleString("he-IL")}`;
@@ -262,7 +282,9 @@
 
       setConnectionStatus();
       renderAll();
-      showTab("messages");
+      if (SHOW_PUBLIC_MESSAGES) {
+        showTab("messages");
+      }
     } catch (error) {
       console.error("Could not save support message", error);
       window.alert("לא הצלחנו לשלוח את ההודעה כרגע. נסו שוב בעוד כמה דקות.");
@@ -280,6 +302,8 @@
   }
 
   function renderMessages() {
+    if (!SHOW_PUBLIC_MESSAGES) return;
+
     els.messagesList.replaceChildren();
 
     if (!state.messages.length) {
@@ -326,6 +350,10 @@
   }
 
   function showTab(tabName) {
+    if (tabName === "messages" && !SHOW_PUBLIC_MESSAGES) {
+      tabName = "support";
+    }
+
     const isSupport = tabName === "support";
     els.supportPanel.hidden = !isSupport;
     els.messagesPanel.hidden = isSupport;
@@ -347,5 +375,6 @@
     button.addEventListener("click", () => showTab(button.dataset.tabButton));
   });
 
+  applyFeatureFlags();
   loadMessages();
 })();
