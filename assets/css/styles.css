@@ -147,6 +147,29 @@ button {
   line-height: 1.7;
 }
 
+.initiative-link {
+  margin: -4px 0 24px;
+}
+
+.initiative-link a {
+  display: block;
+  padding: 13px 16px;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-lg);
+  background: rgba(255, 253, 248, 0.78);
+  color: var(--color-accent-dark);
+  font-size: 14px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(33, 24, 15, 0.07);
+}
+
+.initiative-link a:hover {
+  background: var(--color-background-primary);
+  border-color: var(--color-border-primary);
+}
+
 .stats-bar {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -329,7 +352,12 @@ button {
   gap: 6px;
 }
 
-.copy-account-btn {
+.copy-account-actions-wide {
+  grid-template-columns: 1fr;
+}
+
+.copy-account-btn,
+.contribution-link-btn {
   min-height: 32px;
   padding: 6px 8px;
   border: 1px solid var(--color-border-secondary);
@@ -338,10 +366,23 @@ button {
   color: var(--color-text-primary);
   font-size: 11px;
   font-weight: 700;
+  text-align: center;
+  text-decoration: none;
 }
 
-.copy-account-btn:hover {
+.copy-account-btn:hover,
+.contribution-link-btn:hover {
   background: var(--color-background-tertiary);
+}
+
+.contribution-link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-color: rgba(167, 15, 26, 0.2);
+  background: var(--color-accent-soft);
+  color: var(--color-accent-dark);
+  font-weight: 800;
 }
 
 .form-panel {

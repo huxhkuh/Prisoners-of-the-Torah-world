@@ -71,6 +71,8 @@
   }
 
   function getAccountLines(detainee) {
+    if (!detainee.bank) return [];
+
     return [
       `שם: ${detainee.name}`,
       `בנק: ${detainee.bank.name}`,
@@ -122,6 +124,16 @@
     return button;
   }
 
+  function createExternalLink(label, url) {
+    const link = document.createElement("a");
+    link.className = "contribution-link-btn";
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = label;
+    return link;
+  }
+
   function getDonationTotalForDetainee(detaineeId) {
     return state.messages
       .filter((message) => message.detaineeId === detaineeId && message.donation > 0)
@@ -138,15 +150,24 @@
       const intro = document.createElement("div");
       intro.append(createTextNodeElement("h3", "detainee-name", detainee.name), createTextNodeElement("p", "detainee-note", detainee.note));
 
-      const bankInfo = document.createElement("div");
-      bankInfo.className = "bank-info";
-      bankInfo.append(
-        createTextNodeElement("div", "label", "פרטי חשבון להשתתפות"),
-        createTextNodeElement("div", "value", detainee.bank.name),
-        createTextNodeElement("div", "account-line", `סניף: ${detainee.bank.branch}`),
-        createTextNodeElement("div", "account-line", `חשבון: ${detainee.bank.account}`),
-        createTextNodeElement("div", "account-line", `על שם: ${detainee.bank.holder}`)
-      );
+      const contributionInfo = document.createElement("div");
+      contributionInfo.className = "bank-info";
+
+      if (detainee.bank) {
+        contributionInfo.append(
+          createTextNodeElement("div", "label", "פרטי חשבון להשתתפות"),
+          createTextNodeElement("div", "value", detainee.bank.name),
+          createTextNodeElement("div", "account-line", `סניף: ${detainee.bank.branch}`),
+          createTextNodeElement("div", "account-line", `חשבון: ${detainee.bank.account}`),
+          createTextNodeElement("div", "account-line", `על שם: ${detainee.bank.holder}`)
+        );
+      } else {
+        contributionInfo.append(
+          createTextNodeElement("div", "label", "קישור להשתתפות"),
+          createTextNodeElement("div", "value", detainee.contribution.provider),
+          createTextNodeElement("div", "account-line", detainee.contribution.label)
+        );
+      }
 
       const actions = document.createElement("div");
       actions.className = "detainee-actions";
@@ -160,16 +181,22 @@
 
       const copyActions = document.createElement("div");
       copyActions.className = "copy-account-actions";
-      copyActions.append(
-        createCopyButton("העתק בנק", detainee.bank.name),
-        createCopyButton("העתק סניף", detainee.bank.branch),
-        createCopyButton("העתק חשבון", detainee.bank.account),
-        createCopyButton("העתק על שם", detainee.bank.holder),
-        createCopyButton("העתק הכל", getAccountLines(detainee).join("\n"))
-      );
+
+      if (detainee.bank) {
+        copyActions.append(
+          createCopyButton("העתק בנק", detainee.bank.name),
+          createCopyButton("העתק סניף", detainee.bank.branch),
+          createCopyButton("העתק חשבון", detainee.bank.account),
+          createCopyButton("העתק על שם", detainee.bank.holder),
+          createCopyButton("העתק הכל", getAccountLines(detainee).join("\n"))
+        );
+      } else {
+        copyActions.classList.add("copy-account-actions-wide");
+        copyActions.append(createExternalLink("פתח בנדרים פלוס", detainee.contribution.url), createCopyButton("העתק קישור", detainee.contribution.url));
+      }
 
       actions.append(selectButton, copyActions);
-      card.append(intro, bankInfo, actions);
+      card.append(intro, contributionInfo, actions);
 
       const donationTotal = getDonationTotalForDetainee(detainee.id);
       if (donationTotal > 0) {

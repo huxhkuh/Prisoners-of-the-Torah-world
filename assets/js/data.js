@@ -33,6 +33,16 @@ window.SupportSiteData = {
         holder: "חיים ויא",
       },
     },
+    {
+      id: "harav-tzuriel-tzadok",
+      name: "הרב צוריאל צדוק",
+      note: "כתבו כמה מילים של חיזוק וחיבוק קטן מכל אחד.",
+      contribution: {
+        label: "השתתפות בנדרים פלוס",
+        provider: "נדרים פלוס",
+        url: "https://www.matara.pro/nedarimplus/online/?S=matS",
+      },
+    },
   ],
   seedMessages: [],
 };
